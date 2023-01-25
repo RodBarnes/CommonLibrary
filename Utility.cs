@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -30,6 +32,15 @@ namespace Common
             var sf = st.GetFrame(1);
 
             return sf.GetMethod().Name;
+        }
+
+        public static string GetAssemblyDir()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+
+            return Path.GetDirectoryName(path);
         }
 
         public static string FormatWithComma(object value)
