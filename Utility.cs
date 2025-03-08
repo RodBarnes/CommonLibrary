@@ -48,6 +48,36 @@ namespace Common
             return string.Format("{0:n0}", value);
         }
 
+        public static string TimeString(long ticks)
+        {
+            string msg;
+
+            if (ticks > 0)
+            {
+                var span = TimeSpan.FromTicks(ticks);
+                msg = string.Format("{0:D2}.{1:D3}s", span.Seconds, span.Milliseconds);
+                if (span.Minutes > 0)
+                {
+                    msg = $"{string.Format("{0:D2}m", span.Minutes)} {msg}";
+                }
+                if (span.Hours > 0)
+                {
+                    msg = $"{string.Format("{0:D2}h", span.Hours)} {msg}";
+                }
+                //msg = string.Format("{0:D2}h {1:D2}m {2:D2}.{3:D3}s",
+                //                span.Hours,
+                //                span.Minutes,
+                //                span.Seconds,
+                //                span.Milliseconds);
+            }
+            else
+            {
+                msg = "0";
+            }
+
+            return msg;
+        }
+
         public static string StateCodeFromName(string name)
         {
             var checkString = name.TrimAll().ToLower();
